@@ -4,4 +4,4 @@ compile_pdf:
         - cd Notes; latexmk -pdf Notes.tex
     artifacts:
         paths:
-            - Notes.pdf
+            - Notes/Notes.pdf
