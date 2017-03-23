@@ -504,4 +504,205 @@ E-mail: \href{mailto:ramtuvi@post.tau.ac.il}{ramtuvi@post.tau.ac.il}\\
 	\end{enumerate}
 \end{solution}
 
+\section{Reflections at Loads}
+
+\begin{definition}[Reflection coefficient]
+	The reflection coefficient at a junction is defined to be
+	\begin{align*}
+		\Gamma &= \frac{V^-(t)}{V^+(t)}
+	\end{align*}
+	where $V^+(t)$ is the incident wave and $V^-(t)$ is the reflected wave.
+\end{definition}
+
+\begin{definition}[Transmission coefficient]
+	The reflection coefficient at a junction is defined to be
+	\begin{align*}
+		\tau &= \frac{{V_2}^+(t)}{{V_1}^+(t)}
+	\end{align*}
+	where ${V_1}^+(t)$ is the incident wave and ${V_2}^+(t)$ is the transmitted wave.
+\end{definition}
+
+\begin{theorem}
+	For a forward propagating wave $V^+(z,t)$ propagating over an infinite transmission line, with characteristic impedance $Z_C$, extending from $z \to -\infty$ to $z = 0$, terminated at $z = 0$ by a load with resistance $R_L$, the reflection coefficient is
+	\begin{align*}
+		\Gamma_L &= \frac{R_L - Z_C}{R_L + Z_C}
+	\end{align*}
+	and hence
+	\begin{align*}
+		V(z,t) &= V^+\left( t - \frac{z}{v} \right) + \frac{R_L - Z_C}{R_L + Z_C} V^+\left( t + \frac{z}{v} \right)\\
+		I(z,t) &= Y_C \left( V^+\left( t - \frac{z}{v} \right) - \frac{R_L - Z_C}{R_L + Z_C} V^+\left( t + \frac{z}{v} \right) \right)
+	\end{align*}
+\end{theorem}
+
+\begin{solution}
+	For $z < 0$,
+	\begin{align*}
+		V(z,t) &= V^+\left( t - \frac{z}{v} \right) + V^-\left( t + \frac{z}{v} \right)\\
+		I(z,t) &= Y_C V^+\left( t - \frac{z}{v} \right) + Y_C V^-\left( t + \frac{z}{v} \right)
+	\end{align*}
+	By Ohm's Law,
+	\begin{align*}
+		\frac{V_L}{I_L} &= R_L
+	\end{align*}
+	where $V_L$ and $I_L$ are the voltage across and current through the load.
+	Therefore,
+	\begin{align*}
+		V_L &= V(0,t)\\
+		&= V^+(t) + V^-(t)\\
+		I_L &= V(0,t)\\
+		&= Y_C \left( V^+(t) - V^-(t) \right)
+	\end{align*}
+	Therefore,
+	\begin{align*}
+		R_L &= \frac{V^+(t) + V^-(t)}{Y_C\left( V^+(t) - V^-(t) \right)}\\
+		\therefore V^-(t) &= V^+(t) \frac{R_L - Z_C}{R_L + Z_C}
+	\end{align*}
+	Therefore, the reflection coefficient is
+	\begin{align*}
+		\Gamma_L &= \frac{R_L - Z_C}{R_L + Z_C}
+	\end{align*}
+	Hence,
+	\begin{align*}
+		V(z,t) &= V^+\left( t - \frac{z}{v} \right) + V^-\left( t + \frac{z}{v} \right)\\
+		&= V^+\left( t - \frac{z}{v} \right) + \Gamma_L V^+\left( t + \frac{z}{v} \right)\\
+		&= V^+\left( t - \frac{z}{v} \right) + \frac{R_L - Z_C}{R_L + Z_C} V^+\left( t + \frac{z}{v} \right)\\
+		I(z,t) &= Y_C V^+\left( t - \frac{z}{v} \right) + Y_C V^-\left( t + \frac{z}{v} \right)\\
+		&= Y_C \left( V^+\left( t - \frac{z}{v} \right) - \Gamma_L V^+\left( t + \frac{z}{v} \right) \right)\\
+		&= Y_C \left( V^+\left( t - \frac{z}{v} \right) - \frac{R_L - Z_C}{R_L + Z_C} V^+\left( t + \frac{z}{v} \right) \right)
+	\end{align*}
+\end{solution}
+
+\section{Reflection and Transmission at Discontinuities}
+
+\begin{theorem}
+	A system of two infinite transmission lines, with characteristic impedances ${Z_C}_1$ and ${Z_C}_2$ and wave propagation speeds $v_1$ and $v_2$, connected as
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\draw [ultra thick] (0.2,4) to (4,4);
+			\draw [ultra thick] (0.2,0) to (4,0);
+			\draw [ultra thick] (-0.2,4) to (-4,4);
+			\draw [ultra thick] (-0.2,0) to (-4,0);
+			\draw (-0.2,0) to (0.2,0);
+			\draw (-0.2,4) to (0.2,4);
+			\draw [dashed] (0,-1) to (0,5) node [above] {$z = 0$};
+
+			\draw (-2,4) to [open, *-*, v^= ${V_1(z,t)}$] (-2,0);
+			\draw (2,4) to [open, *-*, v^= ${V_2(z,t)}$] (2,0);
+		\end{tikzpicture}
+	\end{figure}
+	is equivalent to
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\draw [ultra thick] (-0.2,4) to (-4,4);
+			\draw [ultra thick] (-0.2,0) to (-4,0);
+			\draw (-0.2,4) to (1,4);
+			\draw (-0.2,0) to (1,0);
+			\draw (1,0) to [R = ${Z_C}_2$] (1,4);
+			\draw [dashed] (0,-1) to (0,5) node [above] {$z = 0$};
+
+			\draw (-2,4) to [open, *-*, v^= ${V_1(z,t)}$] (-2,0);
+		\end{tikzpicture}
+	\end{figure}
+	and hence
+	\begin{align*}
+		\Gamma &= \frac{{Z_C}_2 - {Z_C}_1}{{Z_C}_2 + {Z_C}_1}\\
+		\tau &= \frac{2 {Z_C}_2}{{Z_C}_2 + {Z_C}_1}
+	\end{align*}
+\end{theorem}
+
+\begin{proof}
+	Let the waves propagating in the lines be ${V_1}^+$, ${V_1}^-$, and ${V_2}^+$.
+	\footnote{The second line is infinite in the positive direction, and is excited by the first line only. Hence, there is no backward propagating wave ${V_2}^-$.}
+	\begin{align*}
+		V_1(z,t) &= {V_1}^+\left( t - \frac{z}{v_1} \right) + {V_1}^-\left( t + \frac{z}{v_1} \right)\\
+		\therefore I_1(z,t) &= {Y_C}_1 {V_1}^+\left( t - \frac{z}{v_1} \right) - {V_1}^-\left( t + \frac{z}{v_1} \right)\\
+		V_2(z,t) &= {V_2}^+\left( t - \frac{z}{v_1} \right)\\
+		\therefore I_2(z,t) &= {Y_C}_2 {V_1}^+\left( t - \frac{z}{v_1} \right)
+	\end{align*}
+	Therefore, as the voltage and current are continuous at $z = 0$,
+	\begin{align*}
+		{V_1}^+(t) (1 + \Gamma) &= {V_1}^+(t) \tau\\
+		{Y_C}_1 {V_1}^+(t) (1 - \Gamma) &= {Y_C}_2 {V_1}^+(t) \tau
+	\end{align*}
+	Therefore,
+	\begin{align*}
+		1 + \Gamma &= \tau\\
+		{Y_C}_1 (1 - \Gamma) &= {Y_C}_2 \tau
+	\end{align*}
+	Therefore,
+	\begin{align*}
+		\Gamma &= \frac{{V_1}^-(t)}{{V_1}^+(t)}\\
+		&= \frac{{Z_C}_2 - {Z_C}_1}{{Z_C}_2 + {Z_C}_1}\\
+		\tau &= \frac{2 {Z_C}_2}{{Z_C}_2 + {Z_C}_1}
+	\end{align*}
+	Therefore, the second line is equivalent to a load with impedance ${Z_C}_2$.
+\end{proof}
+
+\section{Reflection and Transmission at Junction with Composite Load}
+
+\begin{theorem}
+	A system of two infinite transmission lines, with characteristic impedances ${Z_C}_1$ and ${Z_C}_2$ and wave propagation speeds $v_1$ and $v_2$, and a lumped resistance, connected as
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\draw [ultra thick] (0.2,4) to (4,4);
+			\draw [ultra thick] (0.2,0) to (4,0);
+			\draw [ultra thick] (-0.2,4) to (-4,4);
+			\draw [ultra thick] (-0.2,0) to (-4,0);
+			\draw (-0.2,0) to (0.2,0);
+			\draw (-0.2,4) to (0.2,4);
+			\draw (0,0) to [R = $R$] (0,4);
+			\draw [dashed] (0,-1) to (0,5) node [above] {$z = 0$};
+
+			\draw (-2,4) to [open, *-*, v^= ${V_1(z,t)}$] (-2,0);
+			\draw (2,4) to [open, *-*, v^= ${V_2(z,t)}$] (2,0);
+		\end{tikzpicture}
+	\end{figure}
+	is equivalent to
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\draw [ultra thick] (-0.2,4) to (-4,4);
+			\draw [ultra thick] (-0.2,0) to (-4,0);
+			\draw (-0.2,4) to (2,4);
+			\draw (-0.2,0) to (2,0);
+			\draw (1,0) to [R = ${Z_C}_2$] (1,4);
+			\draw (2,0) to [R = $R$] (2,4);
+			\draw [dashed] (0,-1) to (0,5) node [above] {$z = 0$};
+
+			\draw (-2,4) to [open, *-*, v^= ${V_1(z,t)}$] (-2,0);
+		\end{tikzpicture}
+	\end{figure}
+	and hence
+	\begin{align*}
+		\Gamma &= \frac{({Z_C}_2 \parallel R) - {Z_C}_1}{({Z_C}_2 \parallel R) + {Z_C}_1}\\
+		\tau &= \frac{2 ({Z_C}_2 \parallel R)}{({Z_C}_2 \parallel R) + {Z_C}_1}
+	\end{align*}
+\end{theorem}
+
+\section{Reverberations in Transmission Lines}
+
+\begin{theorem}
+	The voltage and current in a line with $Z_C$ and $v$ excited at $z = 0$ by a source $V_g(t)$ with internal impedance $R_g$ and terminated by a resistive load $R_L$ at $z = l$ are
+	\begin{align*}
+		V(z,t) &= V_0 + \sum\limits_{n = 1}^{\infty} {V_n}^+\left( t - \frac{z}{v} \right) + {V_n}^-\left( t + \frac{z}{v} \right)\\
+		&= \frac{Z_C}{R_g + Z_C} \left( V_g\left( t - \frac{z}{v} \right) + \Gamma_L V_g\left( t - 2 T + \frac{z}{v} \right) + \Gamma_L \Gamma_g V_g\left( t - 3 T - \frac{z}{v} \right) + \dots \right)\\
+		I(z,t) &= I_0 + Y_C \sum\limits_{n = 1}^{\infty} {V_n}^+\left( t - \frac{z}{v} \right) - {V_n}^-\left( t + \frac{z}{v} \right)\\
+		&= \frac{1}{R_g + Z_C} \left( V_g\left( t - \frac{z}{v} \right) + \Gamma_L V_g\left( t - 2 T + \frac{z}{v} \right) + \Gamma_L \Gamma_G V_g\left( t - 3 T - \frac{z}{v} \right) + \dots \right)
+	\end{align*}
+	where $\Gamma_L$ and $\Gamma_G$ are the reflection coefficients at the load junction and the source junction respectively.
+\end{theorem}
+
+\begin{theorem}
+	The voltage and current in a line with $Z_C$ and $v$ excited at $z = 0$ by a step input of height ${V_g}_0$ with internal impedance $R_g$ and terminated by a resistive load $R_L$ at $z = l$ are
+	\begin{align*}
+		V(z,t) &= {V_g}_0 \frac{Z_C}{R_g + Z_C} (1 + \Gamma_L) \sum\limits_{n = 0}^{\infty} (\Gamma_L \Gamma_g)^n\\
+		&= {V_g}_0 \frac{R_L}{R_g + R_L}\\
+		V(z,t) &= {V_g}_0 \frac{1}{R_g + Z_C} (1 - \Gamma_L) \sum\limits_{n = 0}^{\infty} (\Gamma_L \Gamma_g)^n\\
+		I(z,t) &= {V_g}_0 \frac{1}{R_g + R_L}
+	\end{align*}
+\end{theorem}
+
 \end{document}
